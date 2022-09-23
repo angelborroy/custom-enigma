@@ -1,0 +1,1 @@
+Every secret creates a potential failure point
