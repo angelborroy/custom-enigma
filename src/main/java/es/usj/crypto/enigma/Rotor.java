@@ -77,14 +77,8 @@ public class Rotor {
      * @param leftRotor Rotor placed to the left of this rotor
      */
     public void update(Rotor leftRotor) {
-        if (leftRotor == null) {
+        if (leftRotor == null || leftRotor.ringSequence.indexOf(leftRotor.notch) == 0) {
             ringSequence = rotate(ringSequence);
-        } else {
-            int ixL = this.ringSequence.indexOf(this.notch);
-            int ixR = leftRotor.ringSequence.indexOf(leftRotor.notch);
-            if (ixL != ixR) {
-                ringSequence = rotate(ringSequence);
-            }
         }
     }
 
