@@ -78,9 +78,9 @@ public class Machine {
             char output = plugboard.getPlug(input);
 
             // Rotors position update
-            rightRotor.update(middleRotor);
+            rightRotor.update(leftRotor, middleRotor);
             middleRotor.update(leftRotor);
-            leftRotor.update(null);
+            leftRotor.update();
 
             // Rotor substitution (right-to-left)
             output = rightRotor.forward(output);
