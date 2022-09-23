@@ -16,7 +16,7 @@ public class MachineTest {
                 new Rotor(RotorConfiguration.ROTOR_II, 0),
                 new Rotor(RotorConfiguration.ROTOR_III, 0),
                 new Reflector(ReflectorConfiguration.REFLECTOR_DEFAULT));
-        assertEquals("V", machine.getCipheredText("A"));
+        assertEquals("E", machine.getCipheredText("A"));
     }
 
     @Test
