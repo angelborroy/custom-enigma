@@ -60,4 +60,20 @@ public class MachineTest {
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
+    @Test
+    public void whitespaceDoesNotChangeState() {
+        Machine machine1 = new Machine(
+                new Plugboard("IR:HQ:NT:WZ:VC:OY:GP:LF:BX:AK"),
+                new Rotor(RotorConfiguration.ROTOR_I, 0),
+                new Rotor(RotorConfiguration.ROTOR_II, 0),
+                new Rotor(RotorConfiguration.ROTOR_III, 0),
+                new Reflector(ReflectorConfiguration.REFLECTOR_DEFAULT));
+        Machine machine2 = new Machine(
+                new Plugboard("IR:HQ:NT:WZ:VC:OY:GP:LF:BX:AK"),
+                new Rotor(RotorConfiguration.ROTOR_I, 0),
+                new Rotor(RotorConfiguration.ROTOR_II, 0),
+                new Rotor(RotorConfiguration.ROTOR_III, 0),
+                new Reflector(ReflectorConfiguration.REFLECTOR_DEFAULT));
+        assertEquals(machine1.getCipheredText("A B C").replaceAll(" ", ""), machine2.getCipheredText("ABC"));
+    }
 }
