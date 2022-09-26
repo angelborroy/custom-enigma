@@ -78,7 +78,7 @@ public class Machine {
             char output = plugboard.getPlug(input);
 
             // Rotors position update when a letter is encrypted
-            if (input >= 'A' && input <= 'Z') {
+            if (ALPHABET.indexOf(input) >= 0) {
                 rightRotor.update(leftRotor, middleRotor);
                 middleRotor.update(leftRotor);
                 leftRotor.update();
