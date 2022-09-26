@@ -3,6 +3,7 @@ package es.usj.crypto.enigma;
 import es.usj.crypto.enigma.constant.RotorConfiguration;
 
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import static es.usj.crypto.enigma.Machine.ALPHABET;
 import static org.junit.Assert.assertEquals;
@@ -73,11 +74,11 @@ public class Rotor {
     }
 
     /**
-     * Rotate the rotor when Notch is in the expected place
-     * @param leftRotor Rotor placed to the left of this rotor
+     * Rotate the rotor when other notches are in the expected place
+     * @param leftRotors All the rotors to the left of this rotor
      */
-    public void update(Rotor leftRotor) {
-        if (leftRotor == null || leftRotor.ringSequence.indexOf(leftRotor.notch) == 0) {
+    public void update(Rotor... leftRotors) {
+        if (Stream.of(leftRotors).allMatch(rotor -> rotor.ringSequence.indexOf(rotor.notch) == 0)) {
             ringSequence = rotate(ringSequence);
         }
     }
