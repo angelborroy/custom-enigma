@@ -77,10 +77,12 @@ public class Machine {
             // Plugboard substitution
             char output = plugboard.getPlug(input);
 
-            // Rotors position update
-            rightRotor.update(leftRotor, middleRotor);
-            middleRotor.update(leftRotor);
-            leftRotor.update();
+            // Rotors position update when a letter is encrypted
+            if (ALPHABET.indexOf(input) >= 0) {
+                rightRotor.update(leftRotor, middleRotor);
+                middleRotor.update(leftRotor);
+                leftRotor.update();
+            }
 
             // Rotor substitution (right-to-left)
             output = rightRotor.forward(output);
