@@ -86,6 +86,22 @@ $ cat cipher.txt
 ALFDP AFVFBZ AESMZYQ W YDWKCFNZS MYSBLXN TWCSP
 ```
 
+Use the same configuration to get *plain text* from `cipher.txt`.
+
+```
+$ java -jar target/custom-enigma-0.8.0.jar \
+    --input-file=cipher.txt \
+    --plugboard=IR:HQ:NT:WZ:VC:OY:GP:LF:BX:AK \
+    --left-rotor=1   --left-rotor-position=0 \
+    --middle-rotor=2 --middle-rotor-position=0 \
+    --right-rotor=3  --right-rotor-position=0 \
+    --output-file=deciphered.txt
+
+$ cat deciphered.txt
+EVERY SECRET CREATES A POTENTIAL FAILURE POINT    
+```
+
+
 # License
 
     Copyright 2022 Angel Borroy
