@@ -10,17 +10,17 @@ public class RotorTest {
 
     @Test
     public void availableRotors() {
-        new Rotor(RotorConfiguration.ROTOR_I, 0);
-        new Rotor(RotorConfiguration.ROTOR_II, 0);
-        new Rotor(RotorConfiguration.ROTOR_III, 0);
-        new Rotor(RotorConfiguration.ROTOR_IV, 0);
-        new Rotor(RotorConfiguration.ROTOR_V, 0);
+        new Rotor(RotorConfiguration.ROTOR_I, 'F');
+        new Rotor(RotorConfiguration.ROTOR_II, 'S');
+        new Rotor(RotorConfiguration.ROTOR_III, 'E');
+        new Rotor(RotorConfiguration.ROTOR_IV, 'N');
+        new Rotor(RotorConfiguration.ROTOR_V, 'B');
     }
 
     @Test
     public void wrongInitPosition() {
-        Error error = assertThrows(AssertionError.class, () -> new Rotor(RotorConfiguration.ROTOR_I, 100));
-        String expectedMessage = "Initial position should be 0 to 26";
+        Error error = assertThrows(AssertionError.class, () -> new Rotor(RotorConfiguration.ROTOR_I, '*'));
+        String expectedMessage = "Initial position should be A to Z";
         String actualMessage = error.getMessage();
         assertTrue(actualMessage.contains(expectedMessage));
     }

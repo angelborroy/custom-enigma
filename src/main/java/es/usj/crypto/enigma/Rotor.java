@@ -3,7 +3,6 @@ package es.usj.crypto.enigma;
 import es.usj.crypto.enigma.constant.RotorConfiguration;
 
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import static es.usj.crypto.enigma.Machine.ALPHABET;
 import static org.junit.Assert.assertEquals;
@@ -12,22 +11,25 @@ import static org.junit.Assert.assertTrue;
 /**
  * Each Rotor includes a 26-character sequence for the ring, including every character from the ALPHABET without repetitions
  * The Notch position, that makes the Rotor to rotate, is 1 character from the ALPHABET
- * The Rotor Position is the initial character of the sequence expressed as a number (0-A ... 25-Z)
+ * The Rotor Position is the initial character of the ring sequence, is 1 character from the ALPHABET
  */
 public class Rotor {
 
+    // 26 character sequence including ALPHABET chars in random order with no repetition
     private String ringSequence;
-    private final Character notch;
-    private final int rotorPosition;
+    // Position of the notch in the rotor (enables rotation of rotor to the left)
+    private final char notch;
+    // Initial position of the rotor
+    private final char rotorPosition;
 
     /**
      * Rotor settings
      * @param rotorConfiguration Ring sequence and notch position
-     * @param rotorPosition Starting position for the ring expressed as a number (0-A ... 25-Z)
+     * @param rotorPosition Starting position for the ring expressed as a char (A .. Z)
      */
-    public Rotor(RotorConfiguration rotorConfiguration, int rotorPosition) {
+    public Rotor(RotorConfiguration rotorConfiguration, char rotorPosition) {
 
-        assertTrue("Initial position should be 0 to " + ALPHABET.length(), rotorPosition >= 0 && rotorPosition < ALPHABET.length());
+        assertTrue("Initial position should be A to Z", ALPHABET.indexOf(rotorPosition) != -1);
         this.rotorPosition = rotorPosition;
 
         String input = rotorConfiguration.getRingSequence();
@@ -38,47 +40,50 @@ public class Rotor {
         }
         this.ringSequence = input;
 
-        assertTrue("Notch position should be 0 to " + ALPHABET.length(), ALPHABET.indexOf(rotorConfiguration.getNotch()) > 0);
+        // Rotate the rotor to the initial rotor position
+        while (this.ringSequence.charAt(0) != this.rotorPosition) {
+            this.ringSequence = rotate(this.ringSequence);
+        }
+
+        assertTrue("Notch position should be A to Z", ALPHABET.indexOf(rotorConfiguration.getNotch()) != -1);
         this.notch = rotorConfiguration.getNotch();
 
     }
 
     /**
-     * Get character substitution when moving the rotor from left to right
+     * Get character substitution when passing the rotor from left to right
      * @param c plain character to be substituted
      * @return character substitution
      */
     public char forward(char c) {
         int index = ALPHABET.indexOf(c);
         if (index >= 0) {
-            int position = ((index + rotorPosition) % ALPHABET.length()) % ALPHABET.length();
-            return ringSequence.charAt(position);
+            return ringSequence.charAt(index);
         } else {
             return c;
         }
     }
 
     /**
-     * Get character substitution when moving the rotor from right to left
+     * Get character substitution when passing the rotor from right to left
      * @param c plain character to be substituted
      * @return character substitution
      */
     public char backward(char c) {
         int index = ringSequence.indexOf(c);
         if (index >= 0) {
-            int position = ((index + rotorPosition) % ALPHABET.length()) % ALPHABET.length();
-            return ALPHABET.charAt(position);
+            return ALPHABET.charAt(index);
         } else {
             return c;
         }
     }
 
     /**
-     * Rotate the rotor when other notches are in the expected place
-     * @param leftRotors All the rotors to the left of this rotor
+     * Rotate the rotor when rotor to the right is at notch position
+     * @param rightRotor Rotor to the right
      */
-    public void update(Rotor... leftRotors) {
-        if (Stream.of(leftRotors).allMatch(rotor -> rotor.ringSequence.indexOf(rotor.notch) == 0)) {
+    public void update(Rotor rightRotor) {
+        if (rightRotor == null || rightRotor.ringSequence.charAt(0) == rightRotor.notch) {
             ringSequence = rotate(ringSequence);
         }
     }

@@ -73,9 +73,9 @@ Run the program create a `plugboard`, the `rotor` configuration and providing th
 $ java -jar target/custom-enigma-0.8.0.jar \
     --input-file=plaintext.txt \
     --plugboard=IR:HQ:NT:WZ:VC:OY:GP:LF:BX:AK \
-    --left-rotor=1   --left-rotor-position=0 \
-    --middle-rotor=2 --middle-rotor-position=0 \
-    --right-rotor=3  --right-rotor-position=0 \
+    --right-rotor=1 --right-rotor-position=F \
+    --middle-rotor=2 --middle-rotor-position=S \
+    --left-rotor=3 --left-rotor-position=E \
     --output-file=cipher.txt
 ```
 
@@ -83,7 +83,7 @@ The program will produce the file `cipher.txt` including the ciphered text from 
 
 ```
 $ cat cipher.txt
-ALFDP AFVFBZ AESMZYQ W YDWKCFNZS MYSBLXN TWCSP
+UNIUA CJHQIR INSCSWJ N JYZJEYRBC UWMPWQG NDVRY
 ```
 
 Use the same configuration to get *plain text* from `cipher.txt`.
@@ -92,10 +92,10 @@ Use the same configuration to get *plain text* from `cipher.txt`.
 $ java -jar target/custom-enigma-0.8.0.jar \
     --input-file=cipher.txt \
     --plugboard=IR:HQ:NT:WZ:VC:OY:GP:LF:BX:AK \
-    --left-rotor=1   --left-rotor-position=0 \
-    --middle-rotor=2 --middle-rotor-position=0 \
-    --right-rotor=3  --right-rotor-position=0 \
-    --output-file=deciphered.txt
+    --right-rotor=1 --right-rotor-position=F \
+    --middle-rotor=2 --middle-rotor-position=S \
+    --left-rotor=3 --left-rotor-position=E \
+    --output-file=decipher.txt
 
 $ cat deciphered.txt
 EVERY SECRET CREATES A POTENTIAL FAILURE POINT    

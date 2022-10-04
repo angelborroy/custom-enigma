@@ -51,15 +51,17 @@ public class EnigmaApp implements CommandLineRunner {
     // Left Rotor number (1-5)
     private int leftRotor;
     // Left Rotor initial position
-    private int leftRotorPosition;
+    private char leftRotorPosition;
+
     // Middle Rotor number (1-5)
     private int middleRotor;
     // Middle Rotor initial position
-    private int middleRotorPosition;
+    private char middleRotorPosition;
+
     // Right Rotor number (1-5)
     private int rightRotor;
     // Right Rotor initial position
-    private int rightRotorPosition;
+    private char rightRotorPosition;
 
     // Output file to get the cipher text
     private String outFile;
@@ -75,9 +77,9 @@ public class EnigmaApp implements CommandLineRunner {
 
         Machine machine = new Machine(
                 new Plugboard(plugboard),
-                new Rotor(RotorConfiguration.getRotorConfiguration(leftRotor), leftRotorPosition),
-                new Rotor(RotorConfiguration.getRotorConfiguration(middleRotor), middleRotorPosition),
                 new Rotor(RotorConfiguration.getRotorConfiguration(rightRotor), rightRotorPosition),
+                new Rotor(RotorConfiguration.getRotorConfiguration(middleRotor), middleRotorPosition),
+                new Rotor(RotorConfiguration.getRotorConfiguration(leftRotor), leftRotorPosition),
                 new Reflector(ReflectorConfiguration.REFLECTOR_DEFAULT));
 
         String input = Files.readString(Path.of(inFile));
@@ -118,12 +120,12 @@ public class EnigmaApp implements CommandLineRunner {
         this.leftRotor = Integer.valueOf(leftRotor.toString());
 
         Object leftRotorPosition = ps.getProperty("left-rotor-position");
-        if (leftRotorPosition == null) {
-            LOG.error("Use 'left-rotor-position' argument to select the left rotor initial position (from 0 to 25), " +
-                    "for instance --left-rotor-position=0");
+        if (leftRotorPosition == null || leftRotorPosition.toString().length() != 1) {
+            LOG.error("Use 'left-rotor-position' argument to select the left rotor initial position (from A to Z), " +
+                    "for instance --left-rotor-position=A");
             System.exit(-1);
         }
-        this.leftRotorPosition = Integer.valueOf(leftRotorPosition.toString());
+        this.leftRotorPosition = leftRotorPosition.toString().charAt(0);
 
         Object middleRotor = ps.getProperty("middle-rotor");
         if (middleRotor == null) {
@@ -134,12 +136,12 @@ public class EnigmaApp implements CommandLineRunner {
         this.middleRotor = Integer.valueOf(middleRotor.toString());
 
         Object middleRotorPosition = ps.getProperty("middle-rotor-position");
-        if (leftRotorPosition == null) {
-            LOG.error("Use 'middle-rotor-position' argument to select the middle rotor initial position (from 0 to 25), " +
-                    "for instance --middle-rotor-position=0");
+        if (middleRotorPosition == null || middleRotorPosition.toString().length() != 1) {
+            LOG.error("Use 'middle-rotor-position' argument to select the middle rotor initial position (from A to Z), " +
+                    "for instance --middle-rotor-position=A");
             System.exit(-1);
         }
-        this.middleRotorPosition = Integer.valueOf(middleRotorPosition.toString());
+        this.middleRotorPosition = middleRotorPosition.toString().charAt(0);
 
         Object rightRotor = ps.getProperty("right-rotor");
         if (rightRotor == null) {
@@ -150,12 +152,12 @@ public class EnigmaApp implements CommandLineRunner {
         this.rightRotor = Integer.valueOf(rightRotor.toString());
 
         Object rightRotorPosition = ps.getProperty("right-rotor-position");
-        if (rightRotorPosition == null) {
-            LOG.error("Use 'right-rotor-position' argument to select the right rotor initial position (from 0 to 25), " +
-                    "for instance --right-rotor-position=0");
+        if (rightRotorPosition == null || rightRotorPosition.toString().length() != 1) {
+            LOG.error("Use 'right-rotor-position' argument to select the right rotor initial position (from A to Z), " +
+                    "for instance --right-rotor-position=A");
             System.exit(-1);
         }
-        this.rightRotorPosition = Integer.valueOf(rightRotorPosition.toString());
+        this.rightRotorPosition = rightRotorPosition.toString().charAt(0);
 
         Object outFile = ps.getProperty("output-file");
         if (inFile == null) {

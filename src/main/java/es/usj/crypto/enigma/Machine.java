@@ -13,8 +13,8 @@ import static org.junit.Assert.assertTrue;
  * - Apply Plugboard substitution (if character is not mapped, the same input character is used)
  *
  * After every character input, rotors position are rotated:
- * - Left rotor is always rotated
- * - Right and Middle rotors are rotated only if position is at Notch
+ * - Right rotor is always rotated
+ * - Middle and Left rotors are rotated only if position of the rotor to the right is at notch position
  *
  * plainText >>
  *     plugboard >>
@@ -32,24 +32,24 @@ public class Machine {
 
     // Machine configuration
     private final Plugboard plugboard;
-    private final Rotor leftRotor;
-    private final Rotor middleRotor;
     private final Rotor rightRotor;
+    private final Rotor middleRotor;
+    private final Rotor leftRotor;
     private final Reflector reflector;
 
     /**
      * Machine configuration, no rotor configuration repetition is allowed
      * @param plugboard Pair mapping for the alphabet characters (only 10 pairings are accepted)
-     * @param leftRotor Rotor configuration to be placed in the left position
-     * @param middleRotor Rotor configuration to be placed in the middle position
      * @param rightRotor Rotor configuration to be placed in the right position
+     * @param middleRotor Rotor configuration to be placed in the middle position
+     * @param leftRotor Rotor configuration to be placed in the left position
      * @param reflector Pair mapping for the alphabet characters (13 pairings are required)
      */
     public Machine(
             Plugboard plugboard,
-            Rotor leftRotor,
-            Rotor middleRotor,
             Rotor rightRotor,
+            Rotor middleRotor,
+            Rotor leftRotor,
             Reflector reflector) {
         assertTrue("Each rotor configuration should be different",
                 !leftRotor.equals(rightRotor) && !rightRotor.equals(middleRotor) && !middleRotor.equals(rightRotor));
@@ -79,9 +79,9 @@ public class Machine {
 
             // Rotors position update when a letter is encrypted
             if (ALPHABET.indexOf(input) >= 0) {
-                rightRotor.update(leftRotor, middleRotor);
-                middleRotor.update(leftRotor);
-                leftRotor.update();
+                rightRotor.update(null);
+                middleRotor.update(rightRotor);
+                leftRotor.update(middleRotor);
             }
 
             // Rotor substitution (right-to-left)
