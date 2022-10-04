@@ -37,7 +37,7 @@ Since there are changes in Enigma configuration, complexity is still in the same
 
 Complexity is equals to `60 x 17,576 x 676 x 150,738,274,937,250 = 107,458,687,327,250,619,360,000`
 
-That can be expressed as `1.07 x 1023`, and it's comparable with a **77 bit key**
+That can be expressed as `1.07 x 10^23`, and it's comparable with a **77 bit key**
 
 Additional details on Enigma classical configuration available in [https://www.ciphermachinesandcryptology.com/en/enigmatech.htm](https://www.ciphermachinesandcryptology.com/en/enigmatech.htm)
 
